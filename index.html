@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mis Finanzas</title>
+<meta name="description" content="Aparta tus recibos, cuotas y suscripciones y descubre cuánto puedes gastar de verdad este mes. Gratis, en español y sin conectar con tu banco.">
+<meta name="theme-color" content="#EEF2EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C1311" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Mis Finanzas: cuánto puedes gastar de verdad">
+<meta property="og:description" content="Aparta tus pagos del mes y mira tu dinero libre real. Gratis, sin registro y sin conectar con tu banco.">
+<meta property="og:image" content="img/compartir.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/icono.png" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<style>
+:root {
+  --bg: #eef2ef;
+  --surface: #ffffff;
+  --surface-2: #e4eae6;
+  --ink: #13201b;
+  --ink-2: #4c5c55;
+  --ink-3: #7d8b85;
+  --line: #d3dcd7;
+  --deep: #10201a;
+  --deep-ink: #e8f0ec;
+  --deep-ink-2: #9fb3aa;
+  --free: #0b7a5f;
+  --mint: #37c29a;
+  --amber: #e2a93b;
+  --amber-ink: #9a6512;
+  --indigo: #4653c4;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif;
+  --num: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --wrap: 1080px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c1311; --surface: #141d1a; --surface-2: #1b2622; --ink: #e6eeea; --ink-2: #a3b2ab; --ink-3: #6d7c76;
+    --line: #26332e; --deep: #16231e; --free: #37c29a; --amber-ink: #e2a93b; --indigo: #8d97f2; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c1311; --surface: #141d1a; --surface-2: #1b2622; --ink: #e6eeea; --ink-2: #a3b2ab; --ink-3: #6d7c76;
+  --line: #26332e; --deep: #16231e; --free: #37c29a; --amber-ink: #e2a93b; --indigo: #8d97f2; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 18px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 2px solid var(--free); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 20px; }
+.num { font-family: var(--num); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+h1, h2, h3 { letter-spacing: -0.025em; line-height: 1.08; margin: 0; }
+h2 { font-size: clamp(30px, 5vw, 46px); }
+h3 { font-size: 23px; letter-spacing: -0.015em; line-height: 1.2; }
+p { margin: 0; }
+.lead { font-size: 20px; color: var(--ink-2); max-width: 34em; }
+
+/* ── Cabecera ── */
+.top { display: flex; align-items: center; justify-content: space-between; padding-top: calc(env(safe-area-inset-top) + 18px); padding-bottom: 8px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; text-decoration: none; }
+.brand img { width: 34px; height: 34px; border-radius: 9px; }
+.top nav { display: flex; gap: 22px; font-size: 15px; }
+.top nav a { text-decoration: none; color: var(--ink-2); }
+.top nav a:hover { color: var(--ink); }
+@media (max-width: 640px) { .top nav a:not(.nav-app) { display: none; } }
+.nav-app { font-weight: 600; color: var(--free) !important; }
+
+/* ── Botones ── */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 24px; border-radius: 14px; font-weight: 600; font-size: 17px; text-decoration: none; border: none; cursor: pointer; font-family: inherit; }
+.btn-main { background: var(--ink); color: var(--bg); }
+.btn-main:hover { opacity: 0.9; }
+.btn-soft { background: var(--surface-2); color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ── Portada ── */
+.hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: center; padding-top: 56px; padding-bottom: 72px; }
+.hero h1 { font-size: clamp(40px, 6.6vw, 72px); margin-bottom: 22px; }
+.hero h1 span { display: block; color: var(--ink-3); }
+.hero .lead { margin-bottom: 30px; }
+.hero-note { margin-top: 16px; font-size: 15px; color: var(--ink-3); }
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; padding-top: 32px; gap: 40px; }
+}
+
+/* ── Teléfono ── */
+.phone { width: 100%; max-width: 330px; margin: 0 auto; border-radius: 48px; padding: 11px; background: #0b0f0d; box-shadow: 0 40px 80px -30px rgba(16, 32, 26, 0.55), inset 0 0 0 1.5px #2a332f; }
+.phone img { border-radius: 38px; width: 100%; height: auto; aspect-ratio: 390 / 844; object-fit: cover; object-position: top; }
+.phone.small { max-width: 290px; }
+
+/* ── Calculadora: la idea de la app ── */
+.idea { padding: 80px 0; border-top: 1px solid var(--line); }
+.idea-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: start; margin-top: 40px; }
+@media (max-width: 860px) { .idea-grid { grid-template-columns: 1fr; gap: 36px; } }
+.terms { display: grid; gap: 26px; }
+.term { padding-left: 18px; border-left: 4px solid var(--line); }
+.term.t-res { border-color: var(--amber); }
+.term.t-free { border-color: var(--mint); }
+.term b { display: block; font-size: 19px; margin-bottom: 2px; }
+.term p { color: var(--ink-2); font-size: 17px; }
+
+.calc { background: var(--deep); color: var(--deep-ink); border-radius: 26px; padding: 28px; }
+.calc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
+@media (max-width: 480px) { .calc-fields { grid-template-columns: 1fr; } .calc { padding: 22px; } }
+.calc label { display: block; font-size: 14px; color: var(--deep-ink-2); }
+.calc input {
+  display: block; width: 100%; margin-top: 6px; font: 600 24px var(--num); font-variant-numeric: tabular-nums;
+  color: var(--deep-ink); background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px; padding: 10px 14px; outline: none;
+}
+.calc input:focus { border-color: var(--mint); }
+.calc-out-label { color: var(--deep-ink-2); font-size: 16px; }
+.calc-out { font-size: clamp(44px, 8vw, 64px); font-weight: 700; line-height: 1.05; margin: 2px 0 22px; }
+.calc-out.neg { color: #ff8c78; }
+.ruler-total { display: flex; justify-content: space-between; font-size: 15px; color: var(--deep-ink-2); }
+.ruler-total b { color: var(--deep-ink); font-weight: 600; }
+.ruler-line { height: 2px; background: var(--deep-ink); opacity: 0.85; border-radius: 1px; margin: 8px 0 6px; }
+.ruler-bar { display: flex; gap: 5px; height: 16px; }
+.seg { border-radius: 8px; min-width: 6px; transition: flex-grow 0.9s cubic-bezier(.2, .8, .2, 1); }
+.seg-res { background: var(--amber); }
+.seg-free { background: var(--mint); }
+.seg-def { background: repeating-linear-gradient(-45deg, #f06a55 0 6px, #c94c3a 6px 12px); }
+.ruler-legend { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; font-size: 14px; color: var(--deep-ink-2); }
+.ruler-legend b { display: block; color: var(--deep-ink); font-size: 18px; font-weight: 600; }
+.ruler-legend div:last-child { text-align: right; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 4px; margin-right: 6px; vertical-align: 1px; }
+.calc-foot { margin-top: 22px; padding-top: 18px; border-top: 1px dashed rgba(232, 240, 236, 0.2); font-size: 15px; color: var(--deep-ink-2); }
+
+/* ── Funciones ── */
+.features { padding: 40px 0 40px; }
+.feature { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
+.feature:nth-child(even) .feature-img { order: -1; }
+.feature h3 { font-size: clamp(26px, 3.6vw, 36px); line-height: 1.12; margin-bottom: 14px; }
+.feature p { color: var(--ink-2); max-width: 30em; }
+.feature ul { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; color: var(--ink-2); font-size: 17px; }
+.feature li { padding-left: 22px; position: relative; }
+.feature li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 10px; height: 4px; border-radius: 2px; background: var(--mint); }
+@media (max-width: 860px) {
+  .feature { grid-template-columns: 1fr; gap: 32px; padding: 44px 0; }
+  .feature:nth-child(even) .feature-img { order: 0; }
+}
+.also { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 40px; padding: 48px 0 24px; border-top: 1px solid var(--line); }
+.also b { display: block; margin-bottom: 4px; }
+.also p { color: var(--ink-2); font-size: 16px; }
+@media (max-width: 860px) { .also { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .also { grid-template-columns: 1fr; } }
+
+/* ── Privacidad ── */
+.privacy { background: var(--deep); color: var(--deep-ink); padding: 84px 0; margin-top: 56px; }
+.privacy h2 { max-width: 13em; }
+.privacy .lead { color: var(--deep-ink-2); margin-top: 18px; }
+.priv-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px 48px; margin-top: 44px; }
+.priv-list b { display: block; font-size: 19px; margin-bottom: 4px; }
+.priv-list p { color: var(--deep-ink-2); font-size: 17px; }
+@media (max-width: 720px) { .priv-list { grid-template-columns: 1fr; } }
+
+/* ── Instalación ── */
+.install { padding: 88px 0; }
+.install-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; margin-top: 36px; align-items: start; }
+@media (max-width: 860px) { .install-grid { grid-template-columns: 1fr; gap: 36px; } }
+.tabs { display: inline-flex; background: var(--surface-2); border-radius: 12px; padding: 3px; margin-bottom: 26px; }
+.tabs button { border: none; background: none; font: 600 16px var(--font); color: var(--ink-2); padding: 9px 20px; border-radius: 10px; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 20px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 38px 1fr; gap: 14px; align-items: start; }
+.steps li::before { content: counter(s); width: 38px; height: 38px; border-radius: 19px; background: var(--ink); color: var(--bg); display: grid; place-items: center; font: 700 17px var(--num); }
+.steps b { display: block; }
+.steps p { color: var(--ink-2); font-size: 17px; }
+.kbd { display: inline-block; padding: 0 7px; border-radius: 6px; background: var(--surface-2); font-size: 0.9em; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.note { margin-top: 26px; padding: 16px 18px; border-radius: 14px; background: var(--surface); border-left: 4px solid var(--amber); font-size: 16px; color: var(--ink-2); }
+.note b { color: var(--ink); }
+.desk { background: var(--surface); border-radius: 22px; padding: 26px; }
+.desk h3 { margin-bottom: 8px; }
+.desk p { color: var(--ink-2); font-size: 16px; margin-bottom: 18px; }
+.url-box { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+.url-box code { flex: 1 1 220px; font: 600 15px var(--num); background: var(--surface-2); border-radius: 12px; padding: 14px; word-break: break-all; }
+.url-box .btn { min-height: 48px; }
+
+/* ── Preguntas ── */
+.faq { padding: 72px 0 88px; border-top: 1px solid var(--line); }
+.faq-list { margin-top: 30px; max-width: 760px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; list-style: none; padding: 20px 36px 20px 0; font-weight: 600; font-size: 19px; position: relative; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; position: absolute; right: 6px; top: 50%; width: 12px; height: 12px; border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3); transform: translateY(-75%) rotate(45deg); transition: transform 0.2s; }
+.faq details[open] summary::after { transform: translateY(-25%) rotate(-135deg); }
+.faq details p { color: var(--ink-2); padding: 0 0 22px; max-width: 40em; font-size: 17px; }
+
+/* ── Cierre ── */
+.end { text-align: center; padding: 72px 0 40px; }
+.end h2 { margin-bottom: 16px; }
+.end .lead { margin: 0 auto 28px; }
+.end .btn-row { justify-content: center; }
+footer { padding: 40px 0 calc(env(safe-area-inset-bottom) + 40px); color: var(--ink-3); font-size: 14px; border-top: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+.toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 20px; font-size: 15px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.toast.show { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .seg { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="#"><img src="img/icono.png" alt="">Mis Finanzas</a>
+  <nav aria-label="Secciones">
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#privacidad">Privacidad</a>
+    <a href="#instalar">Instalar</a>
+    <a class="nav-app" data-app-link href="https://silver-paletas-f45cdc.netlify.app/">Abrir la app</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div>
+      <h1>Lo que tienes en la cuenta <span>no es lo que puedes gastar.</span></h1>
+      <p class="lead">Mis Finanzas aparta el alquiler, las cuotas y los recibos que aún no te han cobrado y te dice cuánto te queda libre de verdad. Gratis, en español y sin conectar con tu banco.</p>
+      <div class="btn-row">
+        <a class="btn btn-main" data-app-link href="https://silver-paletas-f45cdc.netlify.app/">Abrir la app</a>
+        <a class="btn btn-soft" href="#instalar">Cómo instalarla</a>
+      </div>
+      <p class="hero-note">Para iPhone y Android. Sin registro, sin anuncios.</p>
+    </div>
+    <div class="phone">
+      <picture>
+        <source srcset="img/dark-inicio.webp" media="(prefers-color-scheme: dark)">
+        <img src="img/inicio.webp" width="390" height="844" alt="Pantalla de inicio de Mis Finanzas: 1434,21 € libres para gastar de un saldo de 1831,60 €, con 397,39 € reservados para pagos pendientes.">
+      </picture>
+    </div>
+  </section>
+
+  <section class="idea" id="como-funciona" aria-labelledby="idea-title">
+    <div class="wrap">
+      <h2 id="idea-title">Una cuenta muy simple, hecha por ti cada día.</h2>
+      <div class="idea-grid">
+        <div class="terms">
+          <div class="term">
+            <b>Saldo en cuenta</b>
+            <p>Lo que ves en la app de tu banco. Empiezas escribiéndolo una vez y la app lo actualiza con cada gasto e ingreso que apuntas.</p>
+          </div>
+          <div class="term t-res">
+            <b>Reservado</b>
+            <p>Los pagos fijos que todavía te van a cobrar este mes: alquiler, cuota del coche, luz, suscripciones. Se apartan solos.</p>
+          </div>
+          <div class="term t-free">
+            <b>Libre para gastar</b>
+            <p>Lo que queda. Cuando pagas un recibo, este número no cambia, porque ese dinero ya estaba apartado.</p>
+          </div>
+        </div>
+
+        <form class="calc" aria-label="Pruébalo con tus números" onsubmit="return false">
+          <div class="calc-fields">
+            <label>Tu saldo hoy (€)
+              <input id="c-balance" inputmode="decimal" autocomplete="off" value="1840">
+            </label>
+            <label>Pagos que faltan este mes (€)
+              <input id="c-pending" inputmode="decimal" autocomplete="off" value="650">
+            </label>
+          </div>
+          <div class="calc-out-label">Libre para gastar</div>
+          <output class="calc-out num" id="c-free" for="c-balance c-pending" aria-live="polite">1190,00 €</output>
+          <div class="ruler-total"><span>Saldo en cuenta</span><b class="num" id="c-total">1840,00 €</b></div>
+          <div class="ruler-line"></div>
+          <div class="ruler-bar" aria-hidden="true">
+            <div class="seg seg-res" id="s-res" style="flex-grow:0"></div>
+            <div class="seg seg-free" id="s-free" style="flex-grow:1"></div>
+            <div class="seg seg-def" id="s-def" style="flex-grow:0; display:none"></div>
+          </div>
+          <div class="ruler-legend">
+            <div><span class="dot" style="background:var(--amber)"></span>Reservado<b class="num" id="c-res">650,00 €</b></div>
+            <div><span class="dot" id="c-free-dot" style="background:var(--mint)"></span><span id="c-free-label">Libre</span><b class="num" id="c-free-2">1190,00 €</b></div>
+          </div>
+          <p class="calc-foot">Prueba con tus números. Esto es un ejemplo: aquí no se guarda nada.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap features" aria-label="Qué puedes hacer">
+    <div class="feature">
+      <div>
+        <h3>Tus pagos fijos, apartados y con aviso.</h3>
+        <p>Añade cada recibo una vez y la app sabe cuándo vuelve. Si se te pasa alguno, sigue reservado hasta que lo marques como pagado.</p>
+        <ul>
+          <li>Mensuales, trimestrales, anuales o semanales</li>
+          <li>Financiaciones con número de cuotas: «cuota 12 de 48»</li>
+          <li>Recibos variables como la luz: reservas una estimación y al pagar pones el importe real</li>
+          <li>Avisos de lo que vence en los próximos días, también en el Calendario del iPhone</li>
+        </ul>
+      </div>
+      <div class="feature-img"><div class="phone small"><img src="img/pagos.webp" width="390" height="844" loading="lazy" alt="Lista de pagos pendientes: gimnasio, luz, cuota del coche y Netflix, con su fecha y su importe."></div></div>
+    </div>
+
+    <div class="feature">
+      <div>
+        <h3>Un gasto apuntado en cinco segundos.</h3>
+        <p>Pulsa +, escribe el importe, toca la categoría y guarda. La fecha de hoy ya viene puesta.</p>
+        <ul>
+          <li>Categorías que puedes cambiar: comida, gasolina, ocio, restaurantes…</li>
+          <li>Notas, edición y borrado de cualquier movimiento</li>
+          <li>Historial con filtros por mes, fechas, categoría y búsqueda</li>
+        </ul>
+      </div>
+      <div class="feature-img"><div class="phone small"><img src="img/anadir.webp" width="390" height="844" loading="lazy" alt="Formulario para añadir un gasto de 12,50 € en la categoría Restaurantes."></div></div>
+    </div>
+
+    <div class="feature">
+      <div>
+        <h3>El ahorro, fuera del dinero libre.</h3>
+        <p>Crea objetivos con nombre, cantidad y fecha. Lo que aportas sale del saldo y deja de contar como libre, así no te lo gastas sin darte cuenta.</p>
+        <ul>
+          <li>Progreso de cada objetivo</li>
+          <li>Cuánto tienes que apartar al mes para llegar a tiempo</li>
+          <li>Aportaciones y retiradas con historial</li>
+        </ul>
+      </div>
+      <div class="feature-img"><div class="phone small"><img src="img/ahorro.webp" width="390" height="844" loading="lazy" alt="Pantalla de ahorro con 2050 € ahorrados en dos objetivos: viaje a Japón y fondo de emergencia."></div></div>
+    </div>
+
+    <div class="feature">
+      <div>
+        <h3>Mira en qué se te va el dinero.</h3>
+        <p>Gráficas sencillas para entender tu mes sin hojas de cálculo.</p>
+        <ul>
+          <li>Gastos por categoría</li>
+          <li>Comparativa de ingresos y gastos entre meses</li>
+          <li>Evolución del saldo y del ahorro</li>
+          <li>Tus gastos más altos del periodo</li>
+        </ul>
+      </div>
+      <div class="feature-img"><div class="phone small"><img src="img/informes.webp" width="390" height="844" loading="lazy" alt="Informe de noviembre: 220 € gastados repartidos por categorías en un gráfico circular."></div></div>
+    </div>
+
+    <div class="also">
+      <div><b>Presupuesto para caprichos</b><p>Pon un límite al ocio y las compras y mira cuánto te queda al día sin pasarte.</p></div>
+      <div><b>Tu mes empieza cuando cobras</b><p>Elige el día de inicio: el 1, el 25, el 28… Los cálculos se ajustan a tu nómina.</p></div>
+      <div><b>Funciona sin internet</b><p>Una vez instalada, se abre y guarda aunque estés en modo avión.</p></div>
+      <div><b>Modo claro y oscuro</b><p>Sigue la configuración de tu móvil, o la eliges tú.</p></div>
+      <div><b>Copia de seguridad</b><p>Exporta tus datos a un archivo y guárdalo en iCloud Drive o donde quieras.</p></div>
+      <div><b>Cuadra con tu banco</b><p>Si el saldo no coincide, escribe el real y la app hace el ajuste.</p></div>
+    </div>
+  </section>
+
+  <section class="privacy" id="privacidad" aria-labelledby="priv-title">
+    <div class="wrap">
+      <h2 id="priv-title">Tus movimientos no salen de tu móvil.</h2>
+      <p class="lead">La app no tiene servidor donde guardar nada. Todo lo que apuntas vive solo en tu teléfono.</p>
+      <div class="priv-list">
+        <div><b>Sin cuenta ni contraseña</b><p>No hay que registrarse. Abres la app y empiezas.</p></div>
+        <div><b>Nunca pide acceso a tu banco</b><p>Ni usuario, ni clave, ni conexión. Los números los apuntas tú.</p></div>
+        <div><b>Nadie más ve tus datos</b><p>Tampoco quien ha hecho la app. No hay analítica, anuncios ni rastreadores.</p></div>
+        <div><b>Tú tienes la copia</b><p>Como todo está en tu móvil, si borras la app se borran tus datos. Exporta una copia de vez en cuando.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="install" id="instalar" aria-labelledby="inst-title">
+    <div class="wrap">
+      <h2 id="inst-title">Instálala en un minuto.</h2>
+      <p class="lead" style="margin-top:14px">No está en la App Store: es una app web. Se añade a la pantalla de inicio desde el navegador y funciona como cualquier otra app.</p>
+      <div class="install-grid">
+        <div>
+          <div class="tabs" role="tablist" aria-label="Tipo de móvil">
+            <button role="tab" id="tab-ios" aria-selected="true" aria-controls="steps-ios">iPhone</button>
+            <button role="tab" id="tab-android" aria-selected="false" aria-controls="steps-android">Android</button>
+          </div>
+          <ol class="steps" id="steps-ios" role="tabpanel" aria-labelledby="tab-ios">
+            <li><div><b>Abre la app en Safari</b><p>Tiene que ser Safari. Toca <a data-app-link href="https://silver-paletas-f45cdc.netlify.app/">este enlace</a> desde el iPhone. Si lo abres desde WhatsApp o Instagram, elige «Abrir en Safari».</p></div></li>
+            <li><div><b>Pulsa Compartir</b><p>Es el cuadrado con una flecha hacia arriba. Según tu versión de iOS está en la barra de abajo o tras pulsar <span class="kbd">⋯</span>.</p></div></li>
+            <li><div><b>Elige «Añadir a pantalla de inicio»</b><p>Desliza el menú hacia arriba para encontrarlo. Si no aparece, pulsa <span class="kbd">Editar acciones</span> al final de la lista y añádelo.</p></div></li>
+            <li><div><b>Pulsa Añadir</b><p>Si ves la opción «Abrir como app web», déjala activada.</p></div></li>
+            <li><div><b>Ábrela desde el icono</b><p>Aparece en tu pantalla de inicio como <b style="display:inline">Finanzas</b>. Escribe tu saldo de hoy y listo.</p></div></li>
+          </ol>
+          <ol class="steps" id="steps-android" role="tabpanel" aria-labelledby="tab-android" hidden>
+            <li><div><b>Abre la app en Chrome</b><p>Toca <a data-app-link href="https://silver-paletas-f45cdc.netlify.app/">este enlace</a> desde tu móvil Android.</p></div></li>
+            <li><div><b>Abre el menú</b><p>Son los tres puntos <span class="kbd">⋮</span> de arriba a la derecha.</p></div></li>
+            <li><div><b>Pulsa «Instalar app» o «Añadir a pantalla de inicio»</b><p>El nombre cambia según el móvil. Confirma con Instalar.</p></div></li>
+            <li><div><b>Ábrela desde el icono</b><p>Escribe tu saldo de hoy y listo.</p></div></li>
+          </ol>
+          <p class="note"><b>Empieza siempre desde el icono.</b> El navegador y la app instalada guardan los datos por separado, así que si apuntas cosas en el navegador no las verás en la app.</p>
+        </div>
+        <aside class="desk" aria-label="Si estás en el ordenador">
+          <h3>¿Estás en el ordenador?</h3>
+          <p>La app está pensada para el móvil. Copia la dirección y envíatela por WhatsApp o email, o escríbela directamente en el navegador del teléfono.</p>
+          <div class="url-box">
+            <code id="app-url">silver-paletas-f45cdc.netlify.app</code>
+            <button class="btn btn-main" type="button" id="copy">Copiar</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <h2 id="faq-title">Preguntas frecuentes</h2>
+      <div class="faq-list">
+        <details>
+          <summary>¿Cuánto cuesta?</summary>
+          <p>Nada. No tiene suscripción, ni compras dentro de la app, ni anuncios.</p>
+        </details>
+        <details>
+          <summary>¿Por qué no está en la App Store?</summary>
+          <p>Porque es una app web: se instala desde el navegador sin pasar por la tienda. Una vez en tu pantalla de inicio se abre a pantalla completa, funciona sin conexión y se actualiza sola.</p>
+        </details>
+        <details>
+          <summary>¿Se conecta a mi banco?</summary>
+          <p>No, y nunca te pedirá tus claves. Tú apuntas los gastos e ingresos. Si en algún momento el saldo no coincide con el del banco, ve a Ajustes, pulsa «Ajustar saldo actual» y escribe el real.</p>
+        </details>
+        <details>
+          <summary>¿Qué pasa si cambio de móvil o borro la app?</summary>
+          <p>Tus datos están solo en ese móvil, así que al borrar el icono se borran también. Antes de cambiar de móvil, ve a Ajustes, pulsa «Exportar copia» y guárdala en Archivos o iCloud Drive. En el móvil nuevo, instala la app y elige «Restaurar una copia de seguridad».</p>
+        </details>
+        <details>
+          <summary>¿Puedo usarla en el móvil y en el ordenador a la vez?</summary>
+          <p>Puedes abrirla en los dos, pero cada dispositivo guarda sus propios datos y no se sincronizan. Lo más práctico es usarla en el móvil.</p>
+        </details>
+        <details>
+          <summary>¿Cómo se actualiza?</summary>
+          <p>Cuando hay una versión nueva, la app te avisa al abrirla. Pulsas «Actualizar» y tus datos se conservan.</p>
+        </details>
+        <details>
+          <summary>¿Me dice en qué invertir o cómo ahorrar?</summary>
+          <p>No. Es una herramienta para apuntar y ver tu dinero con claridad. Sus cálculos dependen de lo que tú registras y no son asesoramiento financiero.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap end">
+    <h2>Mira cuánto tienes libre este mes.</h2>
+    <p class="lead">Solo necesitas tu saldo de hoy y tus pagos fijos.</p>
+    <div class="btn-row">
+      <a class="btn btn-main" data-app-link href="https://silver-paletas-f45cdc.netlify.app/">Abrir la app</a>
+      <a class="btn btn-soft" href="#instalar">Cómo instalarla</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mis Finanzas es un proyecto personal y gratuito. Se ofrece tal cual, sin garantías.</span>
+    <span>Sin cookies ni rastreadores.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  // Dirección de la app. Si algún día cambia, cámbiala solo aquí.
+  var APP_URL = 'https://silver-paletas-f45cdc.netlify.app/';
+  document.querySelectorAll('[data-app-link]').forEach(function (a) { a.href = APP_URL; });
+  document.getElementById('app-url').textContent = APP_URL.replace(/^https:\/\//, '').replace(/\/$/, '');
+
+  // ── Calculadora ──
+  var fmt = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
+  function eur(c) { return fmt.format(c / 100).replace('-', '−'); }
+  function cents(s) {
+    s = String(s).replace(/[\s€]/g, '');
+    if (!s) return 0;
+    if (s.indexOf(',') >= 0) s = s.replace(/\./g, '').replace(',', '.');
+    else if (/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, '');
+    var n = Number(s);
+    return isFinite(n) ? Math.round(n * 100) : null;
+  }
+  var $ = function (id) { return document.getElementById(id); };
+  function update() {
+    var b = cents($('c-balance').value), p = cents($('c-pending').value);
+    if (b === null || p === null) return;
+    p = Math.max(0, p);
+    var free = b - p, pos = Math.max(0, b);
+    $('c-total').textContent = eur(b);
+    $('c-res').textContent = eur(p);
+    $('c-free').textContent = eur(free);
+    $('c-free').classList.toggle('neg', free < 0);
+    $('c-free-2').textContent = eur(Math.abs(free));
+    $('c-free-label').textContent = free < 0 ? 'Te faltan' : 'Libre';
+    $('c-free-dot').style.background = free < 0 ? '#f06a55' : 'var(--mint)';
+    $('s-res').style.flexGrow = Math.min(p, pos) || 0;
+    $('s-free').style.flexGrow = Math.max(0, free);
+    $('s-free').style.display = free > 0 ? '' : 'none';
+    $('s-def').style.display = free < 0 ? '' : 'none';
+    $('s-def').style.flexGrow = Math.max(-free, pos * 0.15 || 1);
+  }
+  ['c-balance', 'c-pending'].forEach(function (id) { $(id).addEventListener('input', update); });
+  // Única animación: la barra se reparte al entrar en pantalla.
+  var calc = document.querySelector('.calc');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { io.disconnect(); setTimeout(update, 150); }
+    }, { threshold: 0.4 });
+    io.observe(calc);
+  } else update();
+
+  // ── Pestañas iPhone / Android ──
+  var tabs = { ios: [$('tab-ios'), $('steps-ios')], android: [$('tab-android'), $('steps-android')] };
+  function show(k) {
+    Object.keys(tabs).forEach(function (t) {
+      tabs[t][0].setAttribute('aria-selected', String(t === k));
+      tabs[t][1].hidden = t !== k;
+    });
+  }
+  tabs.ios[0].addEventListener('click', function () { show('ios'); });
+  tabs.android[0].addEventListener('click', function () { show('android'); });
+  if (/android/i.test(navigator.userAgent)) show('android');
+
+  // ── Copiar dirección ──
+  var toast = $('toast'), t;
+  function say(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(t); t = setTimeout(function () { toast.classList.remove('show'); }, 2200); }
+  $('copy').addEventListener('click', function () {
+    if (navigator.clipboard) navigator.clipboard.writeText(APP_URL).then(function () { say('Dirección copiada'); }, function () { say('Selecciona la dirección y cópiala'); });
+    else say('Selecciona la dirección y cópiala');
+  });
+})();
+</script>
+</body>
+</html>
